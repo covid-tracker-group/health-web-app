@@ -25,12 +25,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
-  const [showCodes, setShowCodes] = React.useState<boolean>(false)
-  const [codes, setCodes] = React.useState<string[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
+  const [expires, setExpires] = useState<Date|null>(null)
+  const [showCodes, setShowCodes] = useState<boolean>(false)
+  const [codes, setCodes] = useState<string[]>([])
 
-  const handleGenerateCodes = () => {
-    setCodes(generateCodes())
-    setShowCodes(true)
+  const handleGenerateCodes = async (count: number) => {
+    setLoading(true)
+    try {
+      const { expires, codes } = await generateCodes(count)
+      setCodes(codes)
+      setExpires(expires)
+      setShowCodes(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleCloseCodes = () => {
@@ -42,7 +51,7 @@ export default function App() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <RequestCode onSubmit={handleGenerateCodes} />
+        <RequestCode onSubmit={handleGenerateCodes} isLoading={loading} />
 
         <Dialog
           open={showCodes}
@@ -57,7 +66,7 @@ export default function App() {
               id="scroll-dialog-description"
               tabIndex={-1}
             >
-              <CodeCardList codes={codes} />
+              <CodeCardList expires={expires!} codes={codes} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>

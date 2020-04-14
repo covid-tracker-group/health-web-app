@@ -26,9 +26,10 @@ const useStyles = makeStyles((theme) => ({
 
 type RequestCodeProps = {
   onSubmit: (count: number) => void;
+  isLoading: boolean;
 };
 
-export default function RequestCode({onSubmit}: RequestCodeProps) {
+export default function RequestCode({isLoading, onSubmit}: RequestCodeProps) {
   const classes = useStyles();
   const handleSubmit = (event: FormEvent) => {
     onSubmit(15);
@@ -75,6 +76,7 @@ export default function RequestCode({onSubmit}: RequestCodeProps) {
           variant="contained"
           color="primary"
           className={classes.submit}
+          disabled={isLoading}
         >
           Genereer codes
         </Button>

@@ -14,19 +14,39 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     verticalAlign: "middle",
   },
+  expires: {
+  }
 }));
 
 type CodeCardProps = {
   code: string;
+  expires: Date;
 };
 
-export default function CodeCard({ code }: CodeCardProps) {
+const formatDate = new Intl.DateTimeFormat('nl', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+
+}).format
+
+const formatTime = new Intl.DateTimeFormat('nl', {
+  hour: 'numeric',
+  minute: 'numeric',
+
+}).format
+
+export default function CodeCard({ code, expires }: CodeCardProps) {
   const classes = useStyles();
+
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.code} gutterBottom>
           {code}
+        </Typography>
+        <Typography className={classes.expires}>
+          Verloopt op <strong>{formatDate(expires)}</strong> om <strong>{formatTime(expires)}</strong>
         </Typography>
       </CardContent>
     </Card>
