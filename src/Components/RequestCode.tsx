@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,12 +12,12 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  subtle: {
-    color: theme.palette.info.main,
+  help: {
+    marginTop: theme.spacing(1),
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(4),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -30,6 +30,10 @@ type RequestCodeProps = {
 
 export default function RequestCode({onSubmit}: RequestCodeProps) {
   const classes = useStyles();
+  const handleSubmit = (event: FormEvent) => {
+    onSubmit(15);
+    event.preventDefault()
+  }
 
   return (
     <>
@@ -40,12 +44,12 @@ export default function RequestCode({onSubmit}: RequestCodeProps) {
         Covid Positive test rapportage codes
       </Typography>
 
-      <Typography component="p" className={classes.subtle}>
-        Gebruik dit formulier om één of meerdere codes aan te vagen waarmee gebruikers
+      <Typography variant="body2" className={classes.help}>
+        Gebruik dit formulier om één of meerdere codes aan te vragen waarmee gebruikers
         via een Covid tracking app een positief test resultaat kunnen aanmelden.
       </Typography>
 
-      <form className={classes.form} noValidate>
+      <form className={classes.form} noValidate onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
