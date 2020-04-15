@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Formik, Form, Field, ErrorMessage, FieldProps, FormikErrors } from 'formik';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -29,12 +30,13 @@ type RequestCodeProps = {
   isLoading: boolean;
 };
 
-export default function RequestCode({isLoading, onSubmit}: RequestCodeProps) {
+interface RequestCodeFormValues {
+  count: number;
+}
+
+export default function RequestCode({ isLoading, onSubmit }: RequestCodeProps) {
+  const initialValues: RequestCodeFormValues = { count: 10 };
   const classes = useStyles();
-  const handleSubmit = (event: FormEvent) => {
-    onSubmit(15);
-    event.preventDefault()
-  }
 
   return (
     <>
@@ -50,37 +52,65 @@ export default function RequestCode({isLoading, onSubmit}: RequestCodeProps) {
         via een Covid tracking app een positief test resultaat kunnen aanmelden.
       </Typography>
 
-      <form className={classes.form} noValidate onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="count"
-              label="Aantal codes"
-              name="count"
-              type="number"
-              inputMode="numeric"
-              inputProps={{
-                min: "1",
-                pattern: "[0-9]+",
-              }}
-              defaultValue="1"
-            />
-          </Grid>
-        </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          disabled={isLoading}
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values, actions) => {
+          onSubmit(values.count);
+          actions.setSubmitting(false);
+        }}
+        validate={values => {
+          const errors: FormikErrors<RequestCodeFormValues> = {}
+          if (values.count < 1) {
+            errors.count = "Er moet tenminste één code worden aangevraagd";
+          } else if (values.count > 100) {
+            errors.count = "Er kunnen maximaal 100 codes tegelijk worden aangevraagd";
+          }
+          return errors;
+        }}
         >
-          Genereer codes
-        </Button>
-      </form>
+        {formikBag => (
+          <Form className={classes.form}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Field
+                  name="count"
+                  render={({
+                    field,
+                    meta,
+                  }: FieldProps<RequestCodeFormValues>) => (
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="count"
+                        label="Aantal codes"
+                        type="number"
+                        inputMode="numeric"
+                        inputProps={{
+                          min: "1",
+                          pattern: "[0-9]+",
+                        }}
+                        error={!!(meta.touched && meta.error)}
+                        helperText={<ErrorMessage name="count" />}
+                        {...field}
+                      />
+                    )}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              disabled={formikBag.isSubmitting || formikBag.isValidating}
+            >
+              Genereer codes
+            </Button>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 }
