@@ -4,7 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 export default function App() {
   const classes = useStyles();
   const [loading, setLoading] = useState<boolean>(false)
-  const [expires, setExpires] = useState<Date|null>(null)
+  const [expires, setExpires] = useState<Date | null>(null)
   const [showCodes, setShowCodes] = useState<boolean>(false)
   const [codes, setCodes] = useState<string[]>([])
 
@@ -48,39 +47,41 @@ export default function App() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <RequestCode onSubmit={handleGenerateCodes} isLoading={loading} />
+    <>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <RequestCode onSubmit={handleGenerateCodes} isLoading={loading} />
 
-        <Dialog
-          open={showCodes}
-          onClose={handleCloseCodes}
-          scroll="paper"
-          aria-labelledby="scroll-dialog-title"
-          aria-describedby="scroll-dialog-description"
-        >
-          <DialogTitle id="scroll-dialog-title">Covid rapportage codes</DialogTitle>
-          <DialogContent dividers={true}>
-            <DialogContentText
-              id="scroll-dialog-description"
-              tabIndex={-1}
-            >
-              <CodeCardList expires={expires!} codes={codes} />
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseCodes} color="primary">
-              Sluit
+        </div>
+
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+
+      </Container>
+      <Dialog
+        open={showCodes}
+        onClose={handleCloseCodes}
+        maxWidth="lg"
+        scroll="paper"
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
+      >
+        <DialogTitle id="scroll-dialog-title">Covid rapportage codes</DialogTitle>
+        <DialogContent dividers={true}>
+          <p id="scrolldialog-description">
+            Deze codes kunnen aan patiënten worden gegeven als ze een positieve Covid-19 test hebben ontvangen.
+            Let er op dat deze codes <strong>beperkt houdbaar</strong> zijn.
+          </p>
+          <CodeCardList expires={expires!} codes={codes} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseCodes} color="primary">
+            Sluit
           </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-
-    </Container>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }
