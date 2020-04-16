@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Covid-19 tokens",
+  "name": "Covid-19 positive test token generator",
+  "description": "Generate Covid-19 test result tokens for people using a Covid-19 tracing app.",
   "icons": [
     {
       "src": "favicon.ico",

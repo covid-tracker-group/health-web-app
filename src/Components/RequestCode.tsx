@@ -3,15 +3,16 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import logo from '../logo.svg';
 import { Formik, Form, Field, ErrorMessage, FieldProps, FormikErrors } from 'formik';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    width: theme.spacing(10),
+    height: theme.spacing(10),
   },
   help: {
     marginTop: theme.spacing(1),
@@ -40,9 +41,7 @@ export default function RequestCode({ isLoading, onSubmit }: RequestCodeProps) {
 
   return (
     <>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
+      <Avatar className={classes.avatar} src={logo} />
       <Typography component="h1" variant="h5">
         Covid Positive test rapportage codes
       </Typography>
