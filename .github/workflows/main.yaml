@@ -1,0 +1,40 @@
+name: Run tests
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.yarn
+          key: ${{ runner.OS }}-node-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+        env:
+          YARN_CACHE_FOLDER: ~/.yarn
+
+      - name: Run tests
+        run: yarn run test --verbose
+        env:
+          CI: true
+
+      - name: Coding style
+        run: yarn run lint
+        env:
+          CI: true
