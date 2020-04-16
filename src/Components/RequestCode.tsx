@@ -1,12 +1,19 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import logo from '../logo.svg';
-import { Formik, Form, Field, ErrorMessage, FieldProps, FormikErrors } from 'formik';
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import logo from "../logo.svg";
+import {
+  Formik,
+  Form,
+  Field,
+  ErrorMessage,
+  FieldProps,
+  FormikErrors,
+} from "formik";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -18,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(4),
   },
   submit: {
@@ -47,8 +54,9 @@ export default function RequestCode({ isLoading, onSubmit }: RequestCodeProps) {
       </Typography>
 
       <Typography variant="body2" className={classes.help}>
-        Gebruik dit formulier om één of meerdere codes aan te vragen waarmee gebruikers
-        via een Covid tracking app een positief test resultaat kunnen aanmelden.
+        Gebruik dit formulier om één of meerdere codes aan te vragen waarmee
+        gebruikers via een Covid tracking app een positief test resultaat kunnen
+        aanmelden.
       </Typography>
 
       <Formik
@@ -57,17 +65,18 @@ export default function RequestCode({ isLoading, onSubmit }: RequestCodeProps) {
           onSubmit(values.count);
           actions.setSubmitting(false);
         }}
-        validate={values => {
-          const errors: FormikErrors<RequestCodeFormValues> = {}
+        validate={(values) => {
+          const errors: FormikErrors<RequestCodeFormValues> = {};
           if (values.count < 1) {
             errors.count = "Er moet tenminste één code worden aangevraagd";
           } else if (values.count > 100) {
-            errors.count = "Er kunnen maximaal 100 codes tegelijk worden aangevraagd";
+            errors.count =
+              "Er kunnen maximaal 100 codes tegelijk worden aangevraagd";
           }
           return errors;
         }}
-        >
-        {formikBag => (
+      >
+        {(formikBag) => (
           <Form className={classes.form}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -77,23 +86,23 @@ export default function RequestCode({ isLoading, onSubmit }: RequestCodeProps) {
                     field,
                     meta,
                   }: FieldProps<RequestCodeFormValues>) => (
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="count"
-                        label="Aantal codes"
-                        type="number"
-                        inputMode="numeric"
-                        inputProps={{
-                          min: "1",
-                          pattern: "[0-9]+",
-                        }}
-                        error={!!(meta.touched && meta.error)}
-                        helperText={<ErrorMessage name="count" />}
-                        {...field}
-                      />
-                    )}
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="count"
+                      label="Aantal codes"
+                      type="number"
+                      inputMode="numeric"
+                      inputProps={{
+                        min: "1",
+                        pattern: "[0-9]+",
+                      }}
+                      error={!!(meta.touched && meta.error)}
+                      helperText={<ErrorMessage name="count" />}
+                      {...field}
+                    />
+                  )}
                 />
               </Grid>
             </Grid>

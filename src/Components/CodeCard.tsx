@@ -1,9 +1,8 @@
-import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-
+import React from "react";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,8 +13,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     verticalAlign: "middle",
   },
-  expires: {
-  }
+  expires: {},
 }));
 
 type CodeCardProps = {
@@ -23,18 +21,16 @@ type CodeCardProps = {
   expires: Date;
 };
 
-const formatDate = new Intl.DateTimeFormat('nl', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
+const formatDate = new Intl.DateTimeFormat("nl", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+}).format;
 
-}).format
-
-const formatTime = new Intl.DateTimeFormat('nl', {
-  hour: 'numeric',
-  minute: 'numeric',
-
-}).format
+const formatTime = new Intl.DateTimeFormat("nl", {
+  hour: "numeric",
+  minute: "numeric",
+}).format;
 
 export default function CodeCard({ code, expires }: CodeCardProps) {
   const classes = useStyles();
@@ -46,9 +42,10 @@ export default function CodeCard({ code, expires }: CodeCardProps) {
           {code}
         </Typography>
         <Typography className={classes.expires}>
-          Verloopt op <strong>{formatDate(expires)}</strong> om <strong>{formatTime(expires)}</strong>
+          Verloopt op <strong>{formatDate(expires)}</strong> om{" "}
+          <strong>{formatTime(expires)}</strong>
         </Typography>
       </CardContent>
     </Card>
-  )
+  );
 }
