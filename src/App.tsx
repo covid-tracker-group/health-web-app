@@ -24,21 +24,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
-  const [loading, setLoading] = useState<boolean>(false);
   const [expires, setExpires] = useState<Date | null>(null);
   const [showCodes, setShowCodes] = useState<boolean>(false);
   const [codes, setCodes] = useState<string[]>([]);
 
   const handleGenerateCodes = async (count: number) => {
-    setLoading(true);
-    try {
-      const { expires, codes } = await generateCodes(count);
-      setCodes(codes);
-      setExpires(expires);
-      setShowCodes(true);
-    } finally {
-      setLoading(false);
-    }
+    const { expires, codes } = await generateCodes(count);
+    setCodes(codes);
+    setExpires(expires);
+    setShowCodes(true);
   };
 
   const handleCloseCodes = () => {
@@ -51,7 +45,7 @@ export default function App() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <RequestCode onSubmit={handleGenerateCodes} isLoading={loading} />
+          <RequestCode onSubmit={handleGenerateCodes} />
         </div>
 
         <Box mt={5}>

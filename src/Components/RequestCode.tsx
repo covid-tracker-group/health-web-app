@@ -28,14 +28,13 @@ const useStyles = makeStyles((theme) => ({
 
 type RequestCodeProps = {
   onSubmit: (count: number) => void;
-  isLoading: boolean;
 };
 
 interface RequestCodeFormValues {
   count: number;
 }
 
-export default function RequestCode({ isLoading, onSubmit }: RequestCodeProps) {
+export default function RequestCode({ onSubmit }: RequestCodeProps) {
   const initialValues: RequestCodeFormValues = { count: 10 };
   const classes = useStyles();
 
@@ -54,9 +53,12 @@ export default function RequestCode({ isLoading, onSubmit }: RequestCodeProps) {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, actions) => {
-          onSubmit(values.count);
-          actions.setSubmitting(false);
+        onSubmit={async (values, actions) => {
+          try {
+            onSubmit(values.count);
+          } finally {
+            actions.setSubmitting(false);
+          }
         }}
         validate={(values) => {
           const errors: FormikErrors<RequestCodeFormValues> = {};
