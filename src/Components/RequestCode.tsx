@@ -1,19 +1,12 @@
 import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../logo.svg";
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-  FieldProps,
-  FormikErrors,
-} from "formik";
+import { Formik, Form, Field, FormikErrors } from "formik";
+import { TextField } from "formik-material-ui";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -81,28 +74,17 @@ export default function RequestCode({ isLoading, onSubmit }: RequestCodeProps) {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Field
+                  component={TextField}
                   name="count"
-                  render={({
-                    field,
-                    meta,
-                  }: FieldProps<RequestCodeFormValues>) => (
-                    <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="count"
-                      label="Aantal codes"
-                      type="number"
-                      inputMode="numeric"
-                      inputProps={{
-                        min: "1",
-                        pattern: "[0-9]+",
-                      }}
-                      error={!!(meta.touched && meta.error)}
-                      helperText={<ErrorMessage name="count" />}
-                      {...field}
-                    />
-                  )}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Aantal codes"
+                  type="number"
+                  inputMode="numeric"
+                  inputProps={{
+                    pattern: "[0-9]+",
+                  }}
                 />
               </Grid>
             </Grid>
