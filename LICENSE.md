@@ -1,3 +1,5 @@
+# License (MIT)
+
 Copyright 2020 Simplon B.V.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -15,7 +17,6 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FO
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 ## Dependencies
 
 | Library | License |
@@ -32,4 +33,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 | [React](https://reactjs.org/) | MIT |
 | [TypeScript](https://www.typescriptlang.org/) | Apache-2.0 |
 | [typeface-roboto](https://github.com/KyleAMathews/typefaces/tree/master/packages/roboto) | MIT |
-[ [Roboto font](https://fonts.google.com/specimen/Roboto)] | Apache License 2.0 |
+| [Roboto font](https://fonts.google.com/specimen/Roboto) | Apache License 2.0 |
